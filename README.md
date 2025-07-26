@@ -123,25 +123,16 @@ Open a pull request with context
 
 Follow code style & lint rules (golangci-lint run)
 
-🧠 Related Repositories
-psdt-api-management
+### 🧠 Related Repositories
+* psdt-api-management
 
-psdt-auth-service
+* psdt-auth-service
 
-psdt-shared-protos
+* psdt-shared-protos
 
-psdt-infra
+* psdt-infra
 
 ### 📬 Contact
-Questions or suggestions? Open an issue or reach us at dev@psdtconnect.org
+Questions or suggestions? Open an issue or reach us at antonyshikubu@gmail.com
 
 
-
----
-
-Would you like me to:
-- Generate `docker-compose.yml`, `.env.example`, or CI config templates?
-- Help bootstrap the actual service code using Go (e.g., initial `main.go`, gRPC server)?
-- Generate a matching Docusaurus docs site for PSDT services?
-
-Let me know how deep you'd like to go next.
