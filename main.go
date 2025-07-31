@@ -1,8 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"github.com/AntonyIS-chain/psdt-cluster-service/cmd"
+)
 
-
-func main(){
-	fmt.Println("PSDT Cluster service....")
+func main() {
+	cmd.RunService()
 }
