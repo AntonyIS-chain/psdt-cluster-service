@@ -1,46 +1,59 @@
 package ports
 
-import "github.com/AntonyIS-chain/psdt-cluster-service/internal/core/domain"
+import (
+	"context"
+
+	"github.com/AntonyIS-chain/psdt-cluster-service/internal/core/domain"
+)
 
 // DeveloperRepository defines DB operations for Developer
-type DeveloperRepository interface {
-	CreateDeveloper(dev *domain.Developer) error
-	UpdateDeveloper(dev *domain.Developer) error
-	GetDeveloperByID(id string) (*domain.Developer, error)
-	ListDevelopers() ([]*domain.Developer, error)
-	DeleteDeveloper(id string) error
+type UserRepository interface {
+	CreateUser(ctx context.Context, user *domain.User) (string, error)
+	UpdateUser(ctx context.Context, id string, user *domain.User) error
+	GetUserByID(ctx context.Context, id string) (*domain.User, error)
+	ListUsers(ctx context.Context) ([]domain.User, error)
+	DeleteUser(ctx context.Context, id string) error
 }
 
 // SquadRepository defines DB operations for Squad
 type SquadRepository interface {
-	CreateSquad(squad *domain.Squad) error
-	UpdateSquad(squad *domain.Squad) error
-	GetSquadByID(id string) (*domain.Squad, error)
-	ListSquads() ([]*domain.Squad, error)
-	DeleteSquad(id string) error
+	CreateSquad(ctx context.Context, squad *domain.Squad) (string, error)
+	UpdateSquad(ctx context.Context, id string, squad *domain.Squad) error
+	GetSquadByID(ctx context.Context, id string) (*domain.Squad, error)
+	ListSquads(ctx context.Context) ([]domain.Squad, error)
+	DeleteSquad(ctx context.Context, id string) error
+	AddUserToSquad(ctx context.Context, squadID, userID string) error
+	RemoveUserFromSquad(ctx context.Context, squadID, userID string) error
+	ListUsersInSquad(ctx context.Context, squadID string) ([]*domain.User, error)
 }
 
 // TribeRepository defines DB operations for Tribe
 type TribeRepository interface {
-	CreateTribe(tribe *domain.Tribe) error
-	UpdateTribe(tribe *domain.Tribe) error
-	GetTribeByID(id string) (*domain.Tribe, error)
-	ListTribes() ([]*domain.Tribe, error)
-	DeleteTribe(id string) error
+	CreateTribe(ctx context.Context, tribe *domain.Tribe) (string, error)
+	UpdateTribe(ctx context.Context, id string, tribe *domain.Tribe) error
+	GetTribeByID(ctx context.Context, id string) (*domain.Tribe, error)
+	ListTribes(ctx context.Context) ([]*domain.Tribe, error)
+	DeleteTribe(ctx context.Context, id string) error
+	AddSquadToTribe(ctx context.Context, tribeID, squadID string) error
+	RemoveSquadFromTribe(ctx context.Context, tribeID, squadID string) error
+	ListSquadsInTribe(ctx context.Context, tribeID string) ([]*domain.Squad, error)
 }
 
 // ClusterRepository defines DB operations for Cluster
 type ClusterRepository interface {
-	CreateCluster(cluster *domain.Cluster) error
-	UpdateCluster(cluster *domain.Cluster) error
-	GetClusterByID(id string) (*domain.Cluster, error)
-	ListClusters() ([]*domain.Cluster, error)
-	DeleteCluster(id string) error
+	CreateCluster(ctx context.Context, cluster *domain.Cluster) (string, error)
+	UpdateCluster(ctx context.Context, id string, cluster *domain.Cluster) error
+	GetClusterByID(ctx context.Context, id string) (*domain.Cluster, error)
+	ListClusters(ctx context.Context) ([]*domain.Cluster, error)
+	DeleteCluster(ctx context.Context, id string) error
+	AddTribeToCluster(ctx context.Context, clusterID, tribeID string) error
+	RemoveTribeFromCluster(ctx context.Context, clusterID, tribeID string) error
+	ListTribesInCluster(ctx context.Context, clusterID string) ([]*domain.Tribe, error)
 }
 
 type LoggingService interface {
-    Info(message string, fields map[string]interface{})
-    Error(message string, fields map[string]interface{})
-    Debug(message string, fields map[string]interface{})
-    Warn(message string, fields map[string]interface{})
+	Info(message string, fields map[string]interface{})
+	Error(message string, fields map[string]interface{})
+	Debug(message string, fields map[string]interface{})
+	Warn(message string, fields map[string]interface{})
 }

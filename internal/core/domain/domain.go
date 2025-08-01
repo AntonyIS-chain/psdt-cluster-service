@@ -3,13 +3,14 @@ package domain
 import "time"
 
 type Cluster struct {
-	ID          string    `json:"id"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	CreatedBy   string    `json:"created_by"`
-	UpdatedBy   string    `json:"updated_by"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	ID            string    `json:"id"`
+	Name          string    `json:"name"`
+	Description   string    `json:"description"`
+	ClusterLeadID string    `json:"cluster_lead_id"`
+	CreatedBy     string    `json:"created_by"`
+	UpdatedBy     string    `json:"updated_by"`
+	CreatedAt     time.Time `json:"created_at"`
+	UpdatedAt     time.Time `json:"updated_at"`
 }
 
 type Tribe struct {
@@ -17,6 +18,7 @@ type Tribe struct {
 	Name        string    `json:"name"`
 	ClusterID   string    `json:"cluster_id"`
 	Description string    `json:"description"`
+	TechLeadID  string    `json:"tech_lead_id"`
 	CreatedBy   string    `json:"created_by"`
 	UpdatedBy   string    `json:"updated_by"`
 	CreatedAt   time.Time `json:"created_at"`
@@ -34,12 +36,12 @@ type Squad struct {
 	UpdatedAt   time.Time `json:"updated_at"`
 }
 
-type Developer struct {
+type User struct {
 	ID        string    `json:"id"`
 	FullName  string    `json:"full_name"`
 	Email     string    `json:"email"`
 	Role      string    `json:"role"`
-	SquadID   string    `json:"squad_id"`
+	SquadIDs  []string  `json:"squad_ids" gorm:"type:jsonb;serializer:json"` // OR type:text[] if you prefer array
 	IsActive  bool      `json:"is_active"`
 	CreatedBy string    `json:"created_by"`
 	UpdatedBy string    `json:"updated_by"`
@@ -47,24 +49,22 @@ type Developer struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-
-
 type LogData struct {
-    LogID         string                 `json:"log_id"`          // Unique ID for log entry
-    Timestamp     time.Time              `json:"timestamp"`       // Time the log was created
-    Level         string                 `json:"level"`           // INFO, ERROR, DEBUG, etc.
-    Message       string                 `json:"message"`         // Human-readable message
-    Fields        map[string]interface{} `json:"fields"`          // Additional structured metadata
+	LogID     string                 `json:"log_id"`    // Unique ID for log entry
+	Timestamp time.Time              `json:"timestamp"` // Time the log was created
+	Level     string                 `json:"level"`     // INFO, ERROR, DEBUG, etc.
+	Message   string                 `json:"message"`   // Human-readable message
+	Fields    map[string]interface{} `json:"fields"`    // Additional structured metadata
 
-    // Contextual Metadata
-    ServiceName   string                 `json:"service_name"`    // Which service generated it
-    ServiceVersion string                `json:"service_version"` // Deployed version or git hash
-    Environment   string                 `json:"environment"`     // e.g., production, staging
-    Hostname      string                 `json:"hostname"`        // Host or pod name
-    InstanceID    string                 `json:"instance_id"`     // Instance or container ID
-    TraceID       string                 `json:"trace_id"`        // For tracing logs
-    SpanID        string                 `json:"span_id"`         // For tracing spans
-    CorrelationID string                 `json:"correlation_id"`  // To tie logs across services
-    UserID        string                 `json:"user_id,omitempty"` // If action is user-specific
-    Tags          []string               `json:"tags,omitempty"`    // Optional tags for filtering
+	// Contextual Metadata
+	ServiceName    string   `json:"service_name"`      // Which service generated it
+	ServiceVersion string   `json:"service_version"`   // Deployed version or git hash
+	Environment    string   `json:"environment"`       // e.g., production, staging
+	Hostname       string   `json:"hostname"`          // Host or pod name
+	InstanceID     string   `json:"instance_id"`       // Instance or container ID
+	TraceID        string   `json:"trace_id"`          // For tracing logs
+	SpanID         string   `json:"span_id"`           // For tracing spans
+	CorrelationID  string   `json:"correlation_id"`    // To tie logs across services
+	UserID         string   `json:"user_id,omitempty"` // If action is user-specific
+	Tags           []string `json:"tags,omitempty"`    // Optional tags for filtering
 }
